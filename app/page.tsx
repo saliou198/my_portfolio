@@ -44,7 +44,7 @@ export default function Home() {
           {["react", "typescript", "nextjs", "Tailwind Css"].map((label) => (
             <button
               key={label}
-              className = "px-4 py-2 text-lg text-white pointer cursor-pointer rounded-full border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.18)] backdrop-blur-md hover:scale-105 transition-transform duration-300"
+              className = "px-4 py-2 text-lg text-white pointer cursor-pointer rounded-full border border-white/20  backdrop-blur-md hover:scale-110 font-semibold transition-transform duration-300"
             >
               {label}
             </button>
