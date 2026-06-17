@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "app/reactbits components/FloatingLines.jsx"  ],
   "exclude": ["node_modules"]
 }

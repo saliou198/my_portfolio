@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef } from 'react';
 import {
   Clock,
@@ -10,8 +12,6 @@ import {
   Vector3,
   WebGLRenderer
 } from 'three';
-
-import './FloatingLines.css';
 
 const vertexShader = `
 precision highp float;
@@ -82,7 +82,7 @@ vec3 getLineColor(float t, vec3 baseColor) {
   }
 
   vec3 gradientColor;
-
+  
   if (lineGradientCount == 1) {
     gradientColor = lineGradient[0];
   } else {
@@ -94,10 +94,10 @@ vec3 getLineColor(float t, vec3 baseColor) {
 
     vec3 c1 = lineGradient[idx];
     vec3 c2 = lineGradient[idx2];
-
+    
     gradientColor = mix(c1, c2, f);
   }
-
+  
   return gradientColor * 0.5;
 }
 
@@ -111,7 +111,7 @@ vec3 getLineColor(float t, vec3 baseColor) {
 
   if (shouldBend) {
     vec2 d = screenUv - mouseUv;
-    float influence = exp(-dot(d, d) * bendRadius);
+    float influence = exp(-dot(d, d) * bendRadius); // radial falloff around cursor
     float bendOffset = (mouseUv.y - screenUv.y) * influence * bendStrength * bendInfluence;
     y += bendOffset;
   }
@@ -123,7 +123,7 @@ vec3 getLineColor(float t, vec3 baseColor) {
 void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   vec2 baseUv = (2.0 * fragCoord - iResolution.xy) / iResolution.y;
   baseUv.y *= -1.0;
-
+  
   if (parallax) {
     baseUv += parallaxOffset;
   }
@@ -137,13 +137,13 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     mouseUv = (2.0 * iMouse - iResolution.xy) / iResolution.y;
     mouseUv.y *= -1.0;
   }
-
+  
   if (enableBottom) {
     for (int i = 0; i < bottomLineCount; ++i) {
       float fi = float(i);
       float t = fi / max(float(bottomLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
-
+      
       float angle = bottomWavePosition.z * log(length(baseUv) + 1.0);
       vec2 ruv = baseUv * rotate(angle);
       col += lineCol * wave(
@@ -161,7 +161,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
       float fi = float(i);
       float t = fi / max(float(middleLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
-
+      
       float angle = middleWavePosition.z * log(length(baseUv) + 1.0);
       vec2 ruv = baseUv * rotate(angle);
       col += lineCol * wave(
@@ -179,7 +179,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
       float fi = float(i);
       float t = fi / max(float(topLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
-
+      
       float angle = topWavePosition.z * log(length(baseUv) + 1.0);
       vec2 ruv = baseUv * rotate(angle);
       ruv.x *= -1.0;
@@ -291,6 +291,8 @@ export default function FloatingLines({
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
+    renderer.domElement.style.display = 'block';
+    renderer.domElement.style.pointerEvents = 'none';
     container.appendChild(renderer.domElement);
 
     const uniforms = {
@@ -390,10 +392,23 @@ export default function FloatingLines({
 
     if (ro) ro.observe(container);
 
+    const handlePointerLeave = () => {
+      targetInfluenceRef.current = 0.0;
+      targetParallaxRef.current.set(0, 0);
+    };
+
     const handlePointerMove = event => {
-      const rect = renderer.domElement.getBoundingClientRect();
+      const rect = container.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
+
+      if (x < 0 || x > rect.width || y < 0 || y > rect.height) {
+        handlePointerLeave();
+        return;
+      }
+
       const dpr = renderer.getPixelRatio();
 
       targetMouseRef.current.set(x * dpr, (rect.height - y) * dpr);
@@ -408,14 +423,10 @@ export default function FloatingLines({
       }
     };
 
-    const handlePointerLeave = () => {
-      targetInfluenceRef.current = 0.0;
-    };
-
     if (interactive) {
-      window.addEventListener('pointermove', handlePointerMove);
+      window.addEventListener('pointermove', handlePointerMove, { passive: true });
+      window.addEventListener('pointerleave', handlePointerLeave);
       window.addEventListener('blur', handlePointerLeave);
-      document.addEventListener('pointerleave', handlePointerLeave);
     }
 
     let raf = 0;
@@ -451,8 +462,8 @@ export default function FloatingLines({
 
       if (interactive) {
         window.removeEventListener('pointermove', handlePointerMove);
+        window.removeEventListener('pointerleave', handlePointerLeave);
         window.removeEventListener('blur', handlePointerLeave);
-        document.removeEventListener('pointerleave', handlePointerLeave);
       }
 
       geometry.dispose();
@@ -484,7 +495,7 @@ export default function FloatingLines({
   return (
     <div
       ref={containerRef}
-      className="floating-lines-container"
+      className="relative w-full h-full overflow-hidden floating-lines-container"
       style={{
         mixBlendMode: mixBlendMode
       }}
