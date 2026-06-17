@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
 
-import '../components/Aurora.css';
-
 const VERT = `#version 300 es
 in vec2 position;
 void main() {
@@ -207,5 +205,5 @@ export default function Aurora(props: AuroraProps) {
     };
   }, [amplitude]);
 
-  return <div ref={ctnDom} className="aurora-container" />;
+  return <div ref={ctnDom} className="w-full h-full" />;
 }

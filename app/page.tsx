@@ -1,27 +1,34 @@
 "use client";
 import { useState } from "react";
-import TextPressure from "./TextPressure";
-import FloatingLines from "./FloatingLines";
-import GradualBlur from "./GradualBlur";
+import TextPressure from "./reactbits components/TextPressure";
+import FloatingLines from "./reactbits components/FloatingLines";
+import GradualBlur from "./reactbits components/GradualBlur";
 import NavBar from "./navBar";
 import Skills from "./skills";
-import Aurora from "./Aurora";
+import Aurora from "./reactbits components/Aurora";
+import TargetCursor from "./reactbits components/TargetCursor";
+import LiquidEther from "./reactbits components/liquidEther";
 
-const backgroundWaves = ["top", "middle", "bottom"] as const;
+
 const backgroundThemes = [
+  {
+    name: "Liquid Ether",
+    kind: "liquidether",
+    gradient: ["#5227FF", "#FF9FFC", "#B497CF"],
+    overlay: "bg-slate-950/55",
+  },
   {
     name: "Floating Lines",
     kind: "floatinglines",
-    gradient: ["#22c55e", "#6d35f0", "#e945f5"],
+    gradient: ["#c522c0", "#7b7171", "#474047"],
     overlay: "bg-black/55",
   },
   {
     name: "Aurora",
     kind: "aurora",
-    gradient: ["#38bdf8", "#22d3ee", "#14b8a6"],
+    gradient: ["#7cff67", "#B497CF", "#5227FF"],
     overlay: "bg-slate-950/55",
   },
-  
 ] as const;
 
 const techStack = ["React", "TypeScript", "Next.js", "Tailwind CSS"];
@@ -33,31 +40,58 @@ export default function Home() {
 
   const changeBackgroundTheme = () => {
     setThemeIndex((current) => (current + 1) % backgroundThemes.length);
-
   };
-  
+
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-black text-white">
-      <div className="fixed inset-0 z-0 h-screen w-screen pointer-events-none">
+    <div className="relative min-h-screen w-full overflow-x-hidden bg-black text-white">
+      <TargetCursor
+        spinDuration={2}
+        hideDefaultCursor
+        parallaxOn
+        hoverDuration={0.2}
+      />
+
+      <div className="fixed inset-0 z-0 h-dvh w-screen pointer-events-none">
+        {activeTheme.kind === "liquidether" && (
+          <LiquidEther
+            colors={[...activeTheme.gradient]}
+            mouseForce={20}
+            cursorSize={100}
+            isViscous
+            viscous={30}
+            iterationsViscous={32}
+            iterationsPoisson={32}
+            resolution={0.5}
+            isBounce={false}
+            autoDemo
+            autoSpeed={0.5}
+            autoIntensity={2.2}
+            takeoverDuration={0.25}
+            autoResumeDelay={3000}
+            autoRampDuration={0.6}
+          />
+        )}
         {activeTheme.kind === "floatinglines" && (
           <FloatingLines
-            enabledWaves={[...backgroundWaves]}
+            enabledWaves={["top", "middle", "bottom"]}
             lineCount={[8, 13, 18]}
             lineDistance={[11, 7, 10]}
-            bendRadius={7}
+            bendRadius={8}
             bendStrength={-2}
+            interactive
+            parallax
+            animationSpeed={1}
+            linesGradient={[...activeTheme.gradient]}
           />
         )}
         {activeTheme.kind === "aurora" && (
           <Aurora
-            colorStops={["#7cff67", "#B497CF", "#5227FF"]}
+            colorStops={[...activeTheme.gradient]}
             blend={0.5}
             amplitude={1.0}
             speed={1}
           />
         )}
-      </div>
-      <div>
       </div>
       <div
         className={`fixed inset-0 z-0 pointer-events-none transition-colors duration-500 ${activeTheme.overlay}`}
@@ -69,11 +103,11 @@ export default function Home() {
           themeColors={[...activeTheme.gradient]}
           onThemeChange={changeBackgroundTheme}
         />
-        <main className="main flex flex-col items-center p-4 mt-20 text-white mr-40">
-          <p className="mb-4 mr-40 text-7xl font-bold text-white">
+        <main className="mx-auto w-[min(92%,72rem)] px-2 pt-16 text-white sm:pt-20 md:pt-24">
+          <p className="mb-4 max-w-3xl text-[clamp(2.75rem,12vw,4.5rem)] font-bold leading-[0.95] text-white">
             Hi! I am <br />
           </p>
-          <div style={{ position: "relative", height: "100px" }}>
+          <div className="relative h-[clamp(4.5rem,18vw,7rem)] w-full max-w-[48rem]">
             <TextPressure
               text="Saliou Dieng!"
               flex
@@ -82,30 +116,30 @@ export default function Home() {
               width
               weight
               italic
+              className="cursor-target"
               textColor="#ffffff"
               strokeColor="#5227FF"
-              minFontSize={72}
+              minFontSize={42}
             />
           </div>
-          <br />
-          <p className="text-lg text-slate-300 font-bold ml-40">
+          <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-slate-300 sm:text-lg">
             A computer science student, building skills in front-end
             development.
           </p>
         </main>
-        
-        <div className="mx-auto mt-10 flex w-[min(92%,72rem)] flex-wrap justify-center gap-3 sm:gap-4 md:justify-start md:pl-16">
+
+        <div className="mx-auto mt-10 flex w-[min(92%,72rem)] flex-wrap justify-start gap-3 px-2 sm:gap-4">
           {techStack.map((label) => (
             <button
               key={label}
-              className="cursor-pointer rounded-full border border-white/20 px-5 py-2 text-base font-semibold text-white backdrop-blur-md transition-transform duration-300 hover:scale-110 sm:text-lg"
+              className="cursor-target rounded-full border border-white/20 px-5 py-2 text-base font-semibold text-white backdrop-blur-md transition-transform duration-300 hover:scale-105 sm:text-lg"
             >
               {label}
             </button>
           ))}
         </div>
       </div>
-      <div className="relative mt-20">
+      <div className="relative z-10 mt-20">
         <Skills />
       </div>
       <GradualBlur

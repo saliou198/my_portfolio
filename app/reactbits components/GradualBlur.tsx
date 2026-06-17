@@ -1,8 +1,6 @@
 import React, { CSSProperties, useEffect, useRef, useState, useMemo, PropsWithChildren } from 'react';
 
-import '../components/GradualBlur.css';
-
-type GradualBlurProps = {
+type GradualBlurProps = PropsWithChildren<{
   position?: 'top' | 'bottom' | 'left' | 'right';
   strength?: number;
   height?: string;
@@ -22,6 +20,7 @@ type GradualBlurProps = {
   mobileWidth?: string;
   tabletWidth?: string;
   desktopWidth?: string;
+
   preset?:
     | 'top'
     | 'bottom'
@@ -39,10 +38,11 @@ type GradualBlurProps = {
   gpuOptimized?: boolean;
   hoverIntensity?: number;
   target?: 'parent' | 'page';
+
   onAnimationComplete?: () => void;
   className?: string;
   style?: CSSProperties;
-};
+}>;
 
 const DEFAULT_CONFIG: Partial<GradualBlurProps> = {
   position: 'bottom',
@@ -67,13 +67,17 @@ const PRESETS: Record<string, Partial<GradualBlurProps>> = {
   bottom: { position: 'bottom', height: '6rem' },
   left: { position: 'left', height: '6rem' },
   right: { position: 'right', height: '6rem' },
+
   subtle: { height: '4rem', strength: 1, opacity: 0.8, divCount: 3 },
   intense: { height: '10rem', strength: 4, divCount: 8, exponential: true },
+
   smooth: { height: '8rem', curve: 'bezier', divCount: 10 },
   sharp: { height: '5rem', curve: 'linear', divCount: 4 },
+
   header: { position: 'top', height: '8rem', curve: 'ease-out' },
   footer: { position: 'bottom', height: '8rem', curve: 'ease-out' },
   sidebar: { position: 'left', height: '6rem', strength: 2.5 },
+
   'page-header': {
     position: 'top',
     height: '10rem',
@@ -117,7 +121,6 @@ const debounce = <T extends (...a: any[]) => void>(fn: T, wait: number) => {
     t = setTimeout(() => fn(...a), wait);
   };
 };
-
 const useResponsiveDimension = (
   responsive: boolean | undefined,
   config: Partial<GradualBlurProps>,
@@ -144,7 +147,7 @@ const useResponsiveDimension = (
   return responsive ? val : (config as any)[key];
 };
 
-const useIntersectionObserver = (ref: React.RefObject<HTMLDivElement | null>, shouldObserve: boolean = false) => {
+const useIntersectionObserver = (ref: React.RefObject<HTMLDivElement>, shouldObserve: boolean = false) => {
   const [isVisible, setIsVisible] = useState(!shouldObserve);
 
   useEffect(() => {
@@ -159,8 +162,8 @@ const useIntersectionObserver = (ref: React.RefObject<HTMLDivElement | null>, sh
   return isVisible;
 };
 
-const GradualBlur: React.FC<PropsWithChildren<GradualBlurProps>> = props => {
-  const containerRef = useRef<HTMLDivElement>(null);
+const GradualBlur: React.FC<GradualBlurProps> = props => {
+  const containerRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
   const [isHovered, setIsHovered] = useState(false);
 
   const config = useMemo(() => {
@@ -204,12 +207,9 @@ const GradualBlur: React.FC<PropsWithChildren<GradualBlurProps>> = props => {
       const direction = getGradientDirection(config.position);
 
       const divStyle: CSSProperties = {
-        position: 'absolute',
-        inset: '0',
         maskImage: `linear-gradient(${direction}, ${gradient})`,
         WebkitMaskImage: `linear-gradient(${direction}, ${gradient})`,
         backdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
-        WebkitBackdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
         opacity: config.opacity,
         transition:
           config.animated && config.animated !== 'scroll'
@@ -217,7 +217,7 @@ const GradualBlur: React.FC<PropsWithChildren<GradualBlurProps>> = props => {
             : undefined
       };
 
-      divs.push(<div key={i} style={divStyle} />);
+      divs.push(<div key={i} className="absolute inset-0" style={divStyle} />);
     }
 
     return divs;
@@ -265,21 +265,13 @@ const GradualBlur: React.FC<PropsWithChildren<GradualBlurProps>> = props => {
   return (
     <div
       ref={containerRef}
-      className={`gradual-blur ${config.target === 'page' ? 'gradual-blur-page' : 'gradual-blur-parent'} ${config.className}`}
+      className={`gradual-blur relative isolate ${config.target === 'page' ? 'gradual-blur-page' : 'gradual-blur-parent'} ${config.className}`}
       style={containerStyle}
       onMouseEnter={hoverIntensity ? () => setIsHovered(true) : undefined}
       onMouseLeave={hoverIntensity ? () => setIsHovered(false) : undefined}
     >
-      <div
-        className="gradual-blur-inner"
-        style={{
-          position: 'relative',
-          width: '100%',
-          height: '100%'
-        }}
-      >
-        {blurDivs}
-      </div>
+      <div className="relative w-full h-full">{blurDivs}</div>
+      {props.children && <div className="relative">{props.children}</div>}
     </div>
   );
 };
@@ -292,14 +284,13 @@ export default GradualBlurMemo;
 
 const injectStyles = () => {
   if (typeof document === 'undefined') return;
-  const styleId = 'gradual-blur-styles';
-  if (document.getElementById(styleId)) return;
-  const styleElement = document.createElement('style');
-  styleElement.id = styleId;
-  styleElement.textContent = `.gradual-blur{pointer-events:none;transition:opacity 0.3s ease-out}.gradual-blur-inner{pointer-events:none}`;
-  document.head.appendChild(styleElement);
+  const id = 'gradual-blur-styles';
+  if (document.getElementById(id)) return;
+  const el = document.createElement('style');
+  el.id = id;
+  el.textContent = `.gradual-blur{pointer-events:none;transition:opacity .3s ease-out}.gradual-blur-inner{pointer-events:none}`;
+  document.head.appendChild(el);
 };
-
 if (typeof document !== 'undefined') {
   injectStyles();
 }

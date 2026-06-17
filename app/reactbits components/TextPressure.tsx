@@ -1,4 +1,8 @@
-import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
+"use client";
+
+// Component ported from https://codepen.io/JuanFuentes/full/rgXKGQ
+
+import { useEffect, useRef, useState, useMemo, useCallback, type FC } from 'react';
 
 interface TextPressureProps {
   text?: string;
@@ -33,12 +37,12 @@ const debounce = (func: (...args: any[]) => void, delay: number) => {
   return (...args: any[]) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
-      func.apply(this, args);
+      func(...args);
     }, delay);
   };
 };
 
-const TextPressure: React.FC<TextPressureProps> = ({
+const TextPressure: FC<TextPressureProps> = ({
   text = 'Compressa',
   fontFamily = 'Compressa VF',
   fontUrl = 'https://res.cloudinary.com/dr6lvwubh/raw/upload/v1529908256/CompressaPRO-GX.woff2',
@@ -179,7 +183,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
           font-style: normal;
         }
 
-        .flex {
+        .text-pressure-flex {
           display: flex;
           justify-content: space-between;
         }
@@ -206,7 +210,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
     );
   }, [fontFamily, fontUrl, flex, stroke, textColor, strokeColor]);
 
-  const dynamicClassName = [className, flex ? 'flex' : '', stroke ? 'stroke' : ''].filter(Boolean).join(' ');
+  const dynamicClassName = [className, flex ? 'text-pressure-flex' : '', stroke ? 'stroke' : ''].filter(Boolean).join(' ');
 
   return (
     <div

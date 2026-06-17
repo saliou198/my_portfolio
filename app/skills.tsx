@@ -48,10 +48,10 @@ export default function Skills() {
     <section className="mx-auto mt-24 w-[min(92%,72rem)] pb-24 text-white">
       <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div className="max-w-2xl">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.32em] text-emerald-300">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300 sm:tracking-[0.32em]">
             Technical expertise
           </p>
-          <h2 className="text-4xl font-bold leading-tight text-white md:text-6xl">
+          <h2 className="text-[clamp(2.25rem,10vw,3.75rem)] font-bold leading-tight text-white">
             Building modern front-end experiences.
           </h2>
         </div>
@@ -91,7 +91,7 @@ export default function Skills() {
                 The frameworks I am practicing the most.
               </p>
             </div>
-            <span className="rounded-full border border-cyan-300/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200">
+            <span className="shrink-0 rounded-full border border-cyan-300/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200 sm:tracking-[0.2em]">
               Front-end
             </span>
           </div>
