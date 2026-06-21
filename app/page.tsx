@@ -50,6 +50,7 @@ export default function Home() {
         parallaxOn
         hoverDuration={0.2}
       />
+      <button>peace n love</button>
 
       <div className="fixed inset-0 z-0 h-dvh w-screen pointer-events-none">
         {activeTheme.kind === "liquidether" && (
@@ -96,14 +97,14 @@ export default function Home() {
       <div
         className={`fixed inset-0 z-0 pointer-events-none transition-colors duration-500 ${activeTheme.overlay}`}
       />
+      <NavBar
+        name="Saliou Dieng"
+        themeName={activeTheme.name}
+        themeColors={[...activeTheme.gradient]}
+        onThemeChange={changeBackgroundTheme}
+      />
       <div className="relative z-10">
-        <NavBar
-          name="Saliou Dieng"
-          themeName={activeTheme.name}
-          themeColors={[...activeTheme.gradient]}
-          onThemeChange={changeBackgroundTheme}
-        />
-        <main className="mx-auto w-[min(92%,72rem)] px-2 pt-16 text-white sm:pt-20 md:pt-24">
+        <main className="mx-auto w-[min(92%,72rem)] px-2 pt-28 text-white sm:pt-24 md:pt-24">
           <p className="mb-4 max-w-3xl text-[clamp(2.75rem,12vw,4.5rem)] font-bold leading-[0.95] text-white">
             Hi! I am <br />
           </p>
