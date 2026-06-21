@@ -3,25 +3,25 @@ export default function Skills() {
     {
       name: "React",
       level: "Solid basics",
-      width: "72%",
+      width: "55%",
       detail: "Components, props, state, hooks",
     },
     {
       name: "TypeScript",
-      level: "Growing",
-      width: "58%",
+      level: "Practicing",
+      width: "40%",
       detail: "Types, interfaces, safer props",
     },
     {
       name: "Next.js",
       level: "Practicing",
-      width: "64%",
+      width: "40%",
       detail: "App Router, pages, components",
     },
     {
       name: "Tailwind CSS",
       level: "Comfortable",
-      width: "76%",
+      width: "75%",
       detail: "Responsive UI, spacing, states",
     },
   ];
@@ -46,7 +46,7 @@ export default function Skills() {
         </p>
       </div>
 
-      <div className="rounded-lg border border-white/10 bg-[linear-gradient(135deg,rgba(124,255,103,0.08),rgba(180,151,207,0.08),rgba(82,39,255,0.12))] p-5 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-6 md:p-7">
+      <div className=" rounded-lg border border-white/10 bg-[linear-gradient(135deg,rgba(124,255,103,0.08),rgba(180,151,207,0.08),rgba(82,39,255,0.12))] p-5 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-6 md:p-7">
         <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h3 className="text-2xl font-semibold text-white">
@@ -56,9 +56,9 @@ export default function Skills() {
               The frameworks I am practicing the most.
             </p>
           </div>
-          <span className="w-fit rounded-full border border-emerald-300/30 bg-emerald-300/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200">
+          {/* <span className="w-fit rounded-full border border-emerald-300/30 bg-emerald-300/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200">
             Front-end
-          </span>
+          </span> */}
         </div>
 
         <div className="space-y-6">
@@ -75,7 +75,7 @@ export default function Skills() {
               </div>
               <div className="h-3 overflow-hidden rounded-full border border-white/10 bg-black/35">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-emerald-300 via-fuchsia-300 to-violet-500 shadow-[0_0_18px_rgba(180,151,207,0.45)]"
+                  className="h-full rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(180,151,207,0.45)]"
                   style={{ width: skill.width }}
                 />
               </div>

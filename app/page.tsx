@@ -1,6 +1,15 @@
 "use client";
 import { useState } from "react";
-import TextPressure from "./reactbits components/TextPressure";
+import {
+  ArrowUpRight,
+  BriefcaseBusiness,
+  Code2,
+  Mail,
+  MapPin,
+  MessageCircle,
+} from "lucide-react";
+
+import BlurText from "./reactbits components/BlurText";
 import FloatingLines from "./reactbits components/FloatingLines";
 import GradualBlur from "./reactbits components/GradualBlur";
 import NavBar from "./navBar";
@@ -10,6 +19,12 @@ import TargetCursor from "./reactbits components/TargetCursor";
 import LiquidEther from "./reactbits components/liquidEther";
 
 const backgroundThemes = [
+  {
+    name: "Aurora",
+    kind: "aurora",
+    gradient: ["#7cff67", "#B497CF", "#5227FF"],
+    overlay: "bg-slate-950/55",
+  },
   {
     name: "Liquid Ether",
     kind: "liquidether",
@@ -21,12 +36,6 @@ const backgroundThemes = [
     kind: "floatinglines",
     gradient: ["#c522c0", "#7b7171", "#474047"],
     overlay: "bg-black/55",
-  },
-  {
-    name: "Aurora",
-    kind: "aurora",
-    gradient: ["#7cff67", "#B497CF", "#5227FF"],
-    overlay: "bg-slate-950/55",
   },
 ] as const;
 
@@ -63,6 +72,52 @@ const projectCards = [
     title: "Systems Practice",
     text: "Small Linux and cybersecurity labs to understand how real systems behave.",
   },
+];
+
+const contactDetails = [
+  {
+    number: "01",
+    label: "Email",
+    value: "salioudieng2808@gmail.com",
+    href: "mailto:salioudieng2808@gmail.com",
+    icon: Mail,
+  },
+  {
+    number: "02",
+    label: "WhatsApp",
+    value: "+221 78 702 56 23",
+    href: "https://wa.me/221787025623",
+    icon: MessageCircle,
+  },
+  
+];
+
+const networkLinks = [
+  {
+    label: "LinkedIn",
+    value: "/in/saliou-dieng",
+    href: "https://www.linkedin.com/in/saliou-dieng-18389033a/",
+    icon: BriefcaseBusiness,
+  },
+  {
+    label: "GitHub",
+    value: "@saliou198",
+    href: "https://github.com/saliou198",
+    icon: Code2,
+  },
+  {
+    label: "Email",
+    value: "salioudieng2808",
+    href: "mailto:salioudieng2808@gmail.com",
+    icon: Mail,
+  },
+  {
+    label: "WhatsApp",
+    value: "+221 78 702 56 23",
+    href: "https://wa.me/221787025623",
+    icon: MessageCircle,
+  },
+  
 ];
 
 export default function Home() {
@@ -143,18 +198,13 @@ export default function Home() {
             Hi! I am <br />
           </p>
           <div className="relative h-[clamp(4.5rem,18vw,7rem)] w-full max-w-[48rem]">
-            <TextPressure
-              text="Saliou Dieng!"
-              flex
-              alpha={false}
-              stroke={false}
-              width
-              weight
-              italic
-              className="cursor-target"
-              textColor="#ffffff"
-              strokeColor="#5227FF"
-              minFontSize={42}
+            <BlurText
+              text="Saliou Dieng"
+              delay={500}
+              animateBy="words"
+              direction="top"
+              onAnimationComplete={() => console.log("Animation complete!")}
+              className="text-9xl mb-8"
             />
           </div>
           <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-slate-300 sm:text-lg">
@@ -197,7 +247,7 @@ export default function Home() {
             {aboutHighlights.map((item) => (
               <article
                 key={item.title}
-                className="rounded-lg border border-white/10 bg-white/[0.06] p-4 shadow-2xl shadow-black/25 backdrop-blur-xl sm:p-5"
+                className="cursor-target rounded-lg border border-white/10 bg-white/[0.06] p-4 shadow-2xl shadow-black/25 backdrop-blur-xl transition duration-300 hover:border-emerald-300/35 hover:bg-white/[0.08] sm:p-5"
               >
                 <span className="text-sm font-bold text-fuchsia-300">
                   {item.number}
@@ -229,7 +279,7 @@ export default function Home() {
             {projectCards.map((project) => (
               <article
                 key={project.title}
-                className="rounded-lg border border-white/10 bg-white/[0.05] p-6 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-cyan-300/40 hover:bg-white/[0.08]"
+                className="cursor-target rounded-lg border border-white/10 bg-white/[0.05] p-6 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-cyan-300/40 hover:bg-white/[0.08]"
               >
                 <h3 className="text-xl font-semibold text-white">
                   {project.title}
@@ -248,18 +298,137 @@ export default function Home() {
           id="contact"
           className="mx-auto mt-20 w-[min(92%,72rem)] scroll-mt-36 px-2 pb-32 text-white"
         >
-          <div className="rounded-lg border border-white/10 bg-white/[0.06] p-7 backdrop-blur-xl md:p-8">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.32em] text-emerald-300">
-              Contact
+          <div className="mb-10 flex items-center gap-4 border-t border-white/10 pt-8">
+            <span className="h-11 w-11 border border-white/15 bg-white/[0.04] shadow-[0_0_24px_rgba(124,255,103,0.08)]" />
+            <div className="h-px flex-1 bg-white/10" />
+            <p className="hidden text-xs font-semibold uppercase tracking-[0.32em] text-slate-400 sm:block">
+              Status: active
             </p>
-            <h2 className="text-[clamp(2rem,7vw,3.25rem)] font-bold leading-tight text-white">
-              Open to front-end projects, Linux practice and cybersecurity
-              learning.
-            </h2>
-            <p className="mt-5 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">
-              I like steady, practical work: clear interfaces, reliable
-              systems and projects that make the next idea easier to build.
-            </p>
+          </div>
+
+          <div className="grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:gap-16">
+            <div>
+              <div className="border-l border-white/10 pl-6 sm:pl-10">
+                <p className="max-w-xl text-[clamp(1.65rem,4.6vw,2.55rem)] font-semibold leading-tight text-white">
+                  Open to opportunities, collaborations, and technical
+                  conversations.
+                </p>
+                <div className="mt-8 inline-flex items-center gap-3 border border-white/10 bg-white/[0.04] px-4 py-3 text-xs font-bold uppercase tracking-[0.22em] text-slate-300 backdrop-blur-xl sm:text-sm">
+                  <span className="h-3 w-3 bg-emerald-300 shadow-[0_0_18px_rgba(110,231,183,0.75)]" />
+                  Available for hire
+                </div>
+              </div>
+
+              <div className="mt-12 space-y-3">
+                {contactDetails.map((item) => {
+                  const Icon = item.icon;
+                  const content = (
+                    <>
+                      <span className="text-sm font-semibold text-slate-500">
+                        {item.number}
+                      </span>
+                      <span className="flex items-center gap-3 text-base font-semibold uppercase tracking-[0.22em] text-white sm:text-lg">
+                        <Icon
+                          aria-hidden="true"
+                          className="h-5 w-5 text-emerald-200/80"
+                          strokeWidth={1.7}
+                        />
+                        {item.label}
+                      </span>
+                      <span className="col-span-2 min-w-0 break-words text-left text-base font-medium text-slate-300 sm:col-auto sm:text-right sm:text-lg">
+                        {item.value}
+                      </span>
+                    </>
+                  );
+
+                  return item.href ? (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target={item.href.startsWith("http") ? "_blank" : undefined}
+                      rel={
+                        item.href.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
+                      className="cursor-target grid grid-cols-[2.5rem_1fr] items-center gap-x-4 gap-y-3 rounded-lg border border-white/10 bg-black/20 px-4 py-5 no-underline backdrop-blur-xl transition duration-300 hover:border-emerald-300/35 hover:bg-white/[0.07] sm:grid-cols-[3rem_1fr_minmax(12rem,auto)] sm:px-6"
+                    >
+                      {content}
+                    </a>
+                  ) : (
+                    <div
+                      key={item.label}
+                      className="cursor-target grid grid-cols-[2.5rem_1fr] items-center gap-x-4 gap-y-3 rounded-lg border border-white/10 bg-black/20 px-4 py-5 backdrop-blur-xl transition duration-300 hover:border-emerald-300/35 hover:bg-white/[0.07] sm:grid-cols-[3rem_1fr_minmax(12rem,auto)] sm:px-6"
+                    >
+                      {content}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div>
+              <p className="mb-5 text-sm font-semibold uppercase tracking-[0.32em] text-fuchsia-200/80">
+                Network
+              </p>
+              <div className="space-y-3">
+                {networkLinks.map((link) => {
+                  const Icon = link.icon;
+
+                  return (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      target={link.href.startsWith("http") ? "_blank" : undefined}
+                      rel={
+                        link.href.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
+                      className="cursor-target group grid grid-cols-[2.25rem_1fr_1.5rem] items-center gap-x-4 gap-y-3 rounded-lg border border-white/10 bg-white/[0.035] px-4 py-5 no-underline backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:border-fuchsia-300/35 hover:bg-white/[0.075] sm:grid-cols-[2.5rem_1fr_auto_1.5rem] sm:px-6"
+                    >
+                      <Icon
+                        aria-hidden="true"
+                        className="h-5 w-5 text-slate-400 transition duration-300 group-hover:text-fuchsia-200"
+                        strokeWidth={1.7}
+                      />
+                      <span className="text-base font-semibold uppercase tracking-[0.18em] text-white sm:text-lg">
+                        {link.label}
+                      </span>
+                      <span className="col-span-2 col-start-2 min-w-0 break-words text-left text-sm text-slate-400 transition duration-300 group-hover:text-slate-200 sm:col-auto sm:col-start-auto sm:text-right sm:text-base">
+                        {link.value}
+                      </span>
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="h-4 w-4 text-slate-500 transition duration-300 group-hover:text-emerald-200"
+                        strokeWidth={1.8}
+                      />
+                    </a>
+                  );
+                })}
+              </div>
+
+              <div className="mt-12 border-t border-white/10 pt-8">
+                <a
+                  href="mailto:salioudieng2808@gmail.com"
+                  className="cursor-target flex items-center justify-between gap-5 rounded-lg border border-white/10 bg-[linear-gradient(135deg,rgba(124,255,103,0.08),rgba(180,151,207,0.09),rgba(82,39,255,0.14))] px-5 py-6 no-underline backdrop-blur-xl transition duration-300 hover:border-emerald-300/35 hover:bg-white/[0.08]"
+                >
+                  <span>
+                    <span className="block text-xs font-bold uppercase tracking-[0.32em] text-slate-400">
+                      Direct message
+                    </span>
+                    <span className="mt-2 block text-xl font-semibold text-white">
+                      Let&apos;s build something clean.
+                    </span>
+                  </span>
+                  <Mail
+                    aria-hidden="true"
+                    className="h-7 w-7 shrink-0 text-emerald-200"
+                    strokeWidth={1.7}
+                  />
+                </a>
+              </div>
+            </div>
           </div>
         </section>
       </div>

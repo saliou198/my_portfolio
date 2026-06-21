@@ -47,13 +47,13 @@ export default function NavBar({
               </Link>
             );
           })}
-          <button
+          {/* <button
             type="button"
             onClick={onThemeChange}
             aria-label={`Change background theme. Current theme: ${themeName}`}
             className="cursor-target flex max-w-full cursor-pointer items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[clamp(0.85rem,1.1vw,1rem)] font-semibold text-white no-underline backdrop-blur-md transition duration-300 hover:border-white/45 hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/30"
-          >
-            <span className="flex -space-x-1" aria-hidden="true">
+          > */}
+            {/* <span className="flex -space-x-1" aria-hidden="true">
               {themeColors.map((color) => (
                 <span
                   key={color}
@@ -61,9 +61,9 @@ export default function NavBar({
                   style={{ backgroundColor: color }}
                 />
               ))}
-            </span>
-            <span>{themeName}</span>
-          </button>
+            </span> */}
+            {/* <span>{themeName}</span> */}
+          {/* </button> */}
         </div>
       </div>
     </nav>
