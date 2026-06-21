@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-
-import BlurText from "./reactbits components/BlurText";
+import TextPressure from "./reactbits components/TextPressure";
 import FloatingLines from "./reactbits components/FloatingLines";
 import GradualBlur from "./reactbits components/GradualBlur";
 import NavBar from "./navBar";
@@ -143,14 +142,21 @@ export default function Home() {
           <p className="mb-4 max-w-3xl text-[clamp(2.75rem,12vw,4.5rem)] font-bold leading-[0.95] text-white">
             Hi! I am <br />
           </p>
-          <BlurText
-            text="Saliou Dieng!"
-            delay={95}
-            animateBy="letters"
-            direction="top"
-            stepDuration={0.32}
-            className="cursor-target min-h-20 max-w-3xl text-5xl font-bold leading-none text-white sm:min-h-24 sm:text-6xl md:min-h-28 md:text-7xl"
-          />
+          <div className="relative h-[clamp(4.5rem,18vw,7rem)] w-full max-w-[48rem]">
+            <TextPressure
+              text="Saliou Dieng!"
+              flex
+              alpha={false}
+              stroke={false}
+              width
+              weight
+              italic
+              className="cursor-target"
+              textColor="#ffffff"
+              strokeColor="#5227FF"
+              minFontSize={42}
+            />
+          </div>
           <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-slate-300 sm:text-lg">
             A computer science student, building skills in front-end
             development.

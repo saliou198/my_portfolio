@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 type NavBarProps = {
   name: string;
@@ -11,10 +10,10 @@ type NavBarProps = {
 };
 
 const navLinks = [
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/contact", label: "Contact" },
-  { href: "/skills", label: "Skills", featured: true },
+  { href: "/#about", label: "About" },
+  { href: "/#projects", label: "Projects" },
+  { href: "/#contact", label: "Contact" },
+  { href: "/#skills", label: "Skills", featured: true },
 ];
 
 export default function NavBar({
@@ -23,27 +22,23 @@ export default function NavBar({
   themeColors,
   onThemeChange,
 }: NavBarProps) {
-  const pathname = usePathname();
-
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 w-full border-b border-white/10 bg-black/10 px-4 py-2.5 text-white backdrop-blur-xl">
+    <nav className="fixed inset-x-0 top-0 z-[999] w-full border-b border-white/10 bg-black/10 px-4 py-2.5 text-white backdrop-blur-xl">
       <div className="mx-auto flex w-full max-w-[78rem] flex-col items-start justify-between gap-2.5 sm:flex-row sm:items-center">
         <Link
-          href="/"
+          href="/#home"
           className="cursor-target text-[clamp(1.05rem,1.8vw,1.35rem)] font-bold text-white no-underline transition duration-200 hover:text-white/85"
         >
           {name}
         </Link>
         <div className="flex w-full flex-wrap items-center gap-x-3 gap-y-2 sm:w-auto sm:justify-end md:gap-x-5">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href || link.featured;
-
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 className={`cursor-target rounded-lg px-3 py-1.5 text-[clamp(0.9rem,1.35vw,1.1rem)] font-medium no-underline transition duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/30 ${
-                  isActive
+                  link.featured
                     ? "border border-white/35 bg-white/[0.03] text-white shadow-[0_0_24px_rgba(255,255,255,0.08)]"
                     : "border border-transparent text-white/75"
                 }`}
