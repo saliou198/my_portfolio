@@ -18,6 +18,7 @@ import Skills from "./skills";
 import Aurora from "./reactbits components/Aurora";
 import TargetCursor from "./reactbits components/TargetCursor";
 import LiquidEther from "./reactbits components/liquidEther";
+import TextPressure from './reactbits components/TextPressure';
 
 const backgroundThemes = [
   {
@@ -203,23 +204,22 @@ export default function Home() {
           <p className="mb-4 max-w-3xl text-[clamp(2.75rem,12vw,4.5rem)] font-bold leading-[0.95] text-white">
             Hi! I am <br />
           </p>
-          <div className="h-[clamp(4.5rem,18vw,7rem)] w-full max-w-[48rem]">
-             <Shuffle
-              text="Saliou Dieng"
-              shuffleDirection="right"
-              duration={0.35}
-              animationMode="evenodd"
-              shuffleTimes={1}
-              ease="power3.out"
-              stagger={0.03}
-              threshold={0.1}
-              triggerOnce={true}
-              triggerOnHover
-              respectReducedMotion={true}
-              loop={false}
-              loopDelay={0}
-              className = "text-7xl font-bold"
-            />
+          <div className="relative h-[clamp(4.5rem,18vw,7rem)] w-full mb-10">
+             <div style={{position: 'relative', height: '250px'}}>
+              <TextPressure
+                text="Saliou Dieng"
+                flex
+                alpha={false}
+                stroke={false}
+                width
+                weight
+                italic
+                textColor="#ffffff"
+                strokeColor="#5227FF"
+                minFontSize={26}
+                
+              />
+            </div>
           </div>
           <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-slate-300 sm:text-lg">
             A computer science student, building skills in front-end
