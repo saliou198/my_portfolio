@@ -7,9 +7,10 @@ import {
   Mail,
   MapPin,
   MessageCircle,
+  Camera,
+  Gamepad,
 } from "lucide-react";
-
-import BlurText from "./reactbits components/BlurText";
+import Shuffle from './reactbits components/Shuffle';
 import FloatingLines from "./reactbits components/FloatingLines";
 import GradualBlur from "./reactbits components/GradualBlur";
 import NavBar from "./navBar";
@@ -89,7 +90,13 @@ const contactDetails = [
     href: "https://wa.me/221787025623",
     icon: MessageCircle,
   },
-  
+  {
+    number: "03",
+    label: "Base",
+    value: "Senegal",
+    href: undefined,
+    icon: MapPin,
+  },
 ];
 
 const networkLinks = [
@@ -106,18 +113,17 @@ const networkLinks = [
     icon: Code2,
   },
   {
-    label: "Email",
-    value: "salioudieng2808",
-    href: "mailto:salioudieng2808@gmail.com",
-    icon: Mail,
+    label: "Instagram",
+    value: "sliou19___",
+    href: "https://www.instagram.com/sliou19___",
+    icon: Camera,
   },
   {
-    label: "WhatsApp",
-    value: "+221 78 702 56 23",
-    href: "https://wa.me/221787025623",
-    icon: MessageCircle,
+    label: "Discord",
+    value: "peacen_love",
+    href: "https://discord.com/users/peacen_love",
+    icon: Gamepad,
   },
-  
 ];
 
 export default function Home() {
@@ -197,14 +203,22 @@ export default function Home() {
           <p className="mb-4 max-w-3xl text-[clamp(2.75rem,12vw,4.5rem)] font-bold leading-[0.95] text-white">
             Hi! I am <br />
           </p>
-          <div className="relative h-[clamp(4.5rem,18vw,7rem)] w-full max-w-[48rem]">
-            <BlurText
+          <div className="h-[clamp(4.5rem,18vw,7rem)] w-full max-w-[48rem]">
+             <Shuffle
               text="Saliou Dieng"
-              delay={500}
-              animateBy="words"
-              direction="top"
-              onAnimationComplete={() => console.log("Animation complete!")}
-              className="text-9xl mb-8"
+              shuffleDirection="right"
+              duration={0.35}
+              animationMode="evenodd"
+              shuffleTimes={1}
+              ease="power3.out"
+              stagger={0.03}
+              threshold={0.1}
+              triggerOnce={true}
+              triggerOnHover
+              respectReducedMotion={true}
+              loop={false}
+              loopDelay={0}
+              className = "text-7xl font-bold"
             />
           </div>
           <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-slate-300 sm:text-lg">
